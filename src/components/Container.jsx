@@ -8,10 +8,11 @@ const Container = () => {
   const agregarTareaNueva = (tareaNueva) => {
     setTareas([...tareas, tareaNueva]);
   };
-  const eliminarTarea = (tareaId)=>{
-    let tareasNuevas = tareas.filter((todo)=>todo.id !== tareaId)
-    setTareas(tareasNuevas)
-  }
+
+  const eliminarTarea = (tareaId) => {
+    let tareasNuevas = tareas.filter((todo) => todo.id !== tareaId);
+    setTareas(tareasNuevas);
+  };
 
   return (
     <div>
@@ -23,7 +24,13 @@ const Container = () => {
           style={{ display: "flex", alignItems: "center", gap: "10px" }}
         >
           <h2>{elemento.descripcion}</h2>
-          <button onClick={()=>eliminarTarea(elemento.id)} style={{ height: "45px" }}>x</button>
+          <button
+            onClick={() => eliminarTarea(elemento.id)}
+            style={{ height: "45px" }}
+          >
+            x
+          </button>
+          <input type="checkbox" name="" id="" />
         </div>
       ))}
     </div>
