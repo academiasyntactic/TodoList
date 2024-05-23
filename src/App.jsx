@@ -2,6 +2,7 @@ import { useState } from "react";
 import Container from "./components/Container";
 import { app } from "./firebase/firebase";
 import {
+  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -13,6 +14,7 @@ import { useEffect } from "react";
 function App() {
   const [productos, setProductos] = useState(null);
   const [recargar, setRecargar] = useState(false);
+  const [producto, setProducto] = useState({});
   const db = getFirestore(app); //2do paso, "conectarnos" a bd
 
   const borrarFirebase = async (idBorrado) => {
@@ -24,6 +26,12 @@ function App() {
       .catch((error) => {
         console.log(error);
       });
+    setRecargar(!recargar);
+  };
+
+  const agregarDocumento = async () => {
+    const docRef = await addDoc(collection(db, "productos"), producto);
+    console.log("Document written with ID: ", docRef.id);
     setRecargar(!recargar);
   };
 
@@ -71,6 +79,25 @@ function App() {
           </div>
         )}
       </ul>
+
+      <div className="flex flex-col">
+        <input
+          type="text"
+          placeholder="nombre"
+          onChange={(e) => setProducto({ ...producto, nombre: e.target.value })}
+        />
+        <input
+          type="text"
+          placeholder="imagen"
+          onChange={(e) => setProducto({ ...producto, imagen: e.target.value })}
+        />
+        <input
+          type="text"
+          placeholder="precio"
+          onChange={(e) => setProducto({ ...producto, precio: e.target.value })}
+        />
+        <button onClick={agregarDocumento}>Agregar</button>
+      </div>
     </div>
   );
 }
